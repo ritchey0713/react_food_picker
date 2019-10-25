@@ -2,11 +2,12 @@ class FoodPickerApp extends React.Component {
     render(){
         const title = "Food Picker"
         const subTitle =  "Find a place to snack!"
+        let options = ["thing 1", "thing 2", "thing 4"]
         return (
             <div>
                 <Header title={title} subtitle={subTitle} />
                 <Action />
-                <Options />
+                <Options options={options}/>
                 <AddOption />
             </div>
         )
@@ -43,7 +44,11 @@ class Options extends React.Component {
     render() {
         return (
             <div>
-                <p>These are the options</p>
+                {
+                    this.props.options.map((option) => {
+                        return <Option key={option} optionText={option} />
+                    })
+                }
                 <Option />
             </div>
         )
@@ -54,7 +59,7 @@ class Option extends React.Component {
     render(){
         return (
             <div>
-                <p>an option tag</p>
+                {this.props.optionText}
             </div>
         )
     }
