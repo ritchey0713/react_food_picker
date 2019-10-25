@@ -1,8 +1,10 @@
 class FoodPickerApp extends React.Component {
     render(){
+        const title = "Food Picker"
+        const subTitle =  "Find a place to snack!"
         return (
             <div>
-                <Header />
+                <Header title={title} subtitle={subTitle} />
                 <Action />
                 <Options />
                 <AddOption />
@@ -13,13 +15,14 @@ class FoodPickerApp extends React.Component {
 
 class Header extends React.Component {
     render() {
+        
         return (
            <div>
                <h1>
-                Food Picker
+                {this.props.title}
                </h1>
                <h2>
-                Find a place to snack!
+                {this.props.subtitle}
                </h2>
            </div> 
         ) 
