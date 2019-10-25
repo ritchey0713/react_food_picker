@@ -1,45 +1,56 @@
-console.log('app.js loaded')
-let appRoot = document.getElementById("app");
+class Header extends React.Component {
+    render() {
+        return (
+           <div>
+               <h1>
+                Food Picker
+               </h1>
+               <h2>
+                Find a place to snack!
+               </h2>
+           </div> 
+        ) 
+    }
 
-let app = {
-    title: "Food Picker",
-    subtitle: "Find a place to eat!",
-    options: []
 }
 
-const onFormSubmit = (e) => {
-    e.preventDefault();
-    let option = e.target.elements.option.value
-
-    if(option) {
-        app.options.push(option)
-        e.target.elements.option.value = ''
-        renderApp()
+class Action extends React.Component {
+    render() {
+        return (
+        <div>
+            <button>What should I eat?</button>
+        </div>)
     }
 }
 
-const onRemoveAll = () => {
-    app.options = []
-    renderApp()
+class Options extends React.Component {
+    render() {
+        return (
+            <div>
+                <p>These are the options</p>
+            </div>
+        )
+    }
 }
 
-const renderApp = () => {
-    let template = (
-        <div>
-            <h1>{app.title}</h1> 
-            {app.subtitle && <p>{app.subtitle}</p>}
-            <p>{app.options.length > 0 ? 'here are your options' : 'No options'}</p>
-            <button onClick={onRemoveAll}>Remove All</button>
-            <p>{app.options.length}</p>
-            <form onSubmit={onFormSubmit}>
-                <input type="text" name="option" placeholder="Enter here"></input>
-                <button>Submit</button>
-            </form>
-        </div>
-    );
-    ReactDOM.render(template, appRoot);
+class AddOption extends React.Component {
+    render() {
+        return (
+            <div>
+                <p> add the options</p>
+            </div>
+        )
+    }
 }
 
-renderApp()
+const jsx = (
+    <div>
+        <h1>TITLE</h1>
+        <Header />
+        <Action /> 
+        <Options />
+        <AddOption />
+    </div>
+)
 
-
+ReactDOM.render(jsx, document.getElementById("app"))
