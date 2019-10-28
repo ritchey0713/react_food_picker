@@ -9,6 +9,7 @@ class FoodPickerApp extends React.Component {
                 <Action />
                 <Options options={options}/>
                 <AddOption />
+                <RemoveButton />
             </div>
         )
     }
@@ -32,10 +33,14 @@ class Header extends React.Component {
 }
 
 class Action extends React.Component {
+    handlePicker() {
+        alert("Handle picker")
+    }
+
     render() {
         return (
         <div>
-            <button>What should I eat?</button>
+            <button onClick={this.handlePicker}>What should I eat?</button>
         </div>)
     }
 }
@@ -66,14 +71,36 @@ class Option extends React.Component {
 }
 
 class AddOption extends React.Component {
+    
+    handleFormSubmit(e) {
+        e.preventDefault();
+        let data = e.target.elements.option.value.trim()
+        if (data) {
+            alert(data)
+        }
+    }
+
     render() {
         return (
             <div>
-                <p> add the options</p>
+                <form onSubmit={this.handleFormSubmit}>
+                    <input type="text" name="option"/>
+                    <button> Submit</button>
+                </form>
             </div>
-        )
+        );
     }
 }
 
+class RemoveButton extends React.Component {
+    removeAllClick() {
+        alert("options removed!")
+    }
+    render() {
+        return (
+            <button onClick={this.removeAllClick}>Remove all options!</button>
+        )
+    }
+}
 
 ReactDOM.render(<FoodPickerApp />, document.getElementById("app"))
