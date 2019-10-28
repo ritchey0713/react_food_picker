@@ -1,13 +1,18 @@
 class FoodPickerApp extends React.Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            options: ["thing 1", "thing 2", "thing 4"]
+        }
+    }
     render(){
         const title = "Food Picker"
         const subTitle =  "Find a place to snack!"
-        let options = ["thing 1", "thing 2", "thing 4"]
         return (
             <div>
                 <Header title={title} subtitle={subTitle} />
-                <Action />
-                <Options options={options}/>
+                <Action hasOptions={this.state.options.length >0}/>
+                <Options options={this.state.options}/>
                 <AddOption />
             </div>
         )
@@ -39,7 +44,11 @@ class Action extends React.Component {
     render() {
         return (
         <div>
-            <button onClick={this.handlePicker}>What should I eat?</button>
+            <button
+                 onClick={this.handlePicker}
+                 disabled={!this.props.hasOptions}>
+                 What should I eat?
+            </button>
         </div>)
     }
 }
