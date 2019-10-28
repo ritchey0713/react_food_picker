@@ -9,7 +9,6 @@ class FoodPickerApp extends React.Component {
                 <Action />
                 <Options options={options}/>
                 <AddOption />
-                <RemoveButton />
             </div>
         )
     }
@@ -46,6 +45,15 @@ class Action extends React.Component {
 }
 
 class Options extends React.Component {
+    // set this properly
+    constructor(props) {
+        super(props)
+        this.handleRemoveAll = this.handleRemoveAll.bind(this);
+    }
+    handleRemoveAll() {
+        // alert("removed!")
+        console.log(this.props.options)
+    }
     render() {
         return (
             <div>
@@ -53,6 +61,11 @@ class Options extends React.Component {
                     this.props.options.map((option) => {
                         return <Option key={option} optionText={option} />
                     })
+                }
+                <button onClick={this.handleRemoveAll}>Remove all options!</button> 
+                {/* 
+                    without constructor
+                <button onClick={this.handleRemoveAll.bind(this.props)}>Remove all options!</button>  */
                 }
                 <Option />
             </div>
@@ -89,17 +102,6 @@ class AddOption extends React.Component {
                 </form>
             </div>
         );
-    }
-}
-
-class RemoveButton extends React.Component {
-    removeAllClick() {
-        alert("options removed!")
-    }
-    render() {
-        return (
-            <button onClick={this.removeAllClick}>Remove all options!</button>
-        )
     }
 }
 
