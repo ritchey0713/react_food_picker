@@ -39,7 +39,13 @@ class FoodPickerApp extends React.Component {
   }
 
   handledeleteOption(option){
-    console.log(option)
+    this.setState((prevState) => {
+      return {
+        options: prevState.options.filter((oldOption) => {
+          return option != oldOption
+        })
+      }
+    })
   }
 
   render() {
