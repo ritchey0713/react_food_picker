@@ -2,11 +2,12 @@ class FoodPickerApp extends React.Component {
   constructor(props) {
   super(props)
   this.state = {
-    options: []
+    options: props.options
   }
   this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
   this.handlePick = this.handlePick.bind(this)
   this.handleAddOption = this.handleAddOption.bind(this)
+  this.handledeleteOption = this.handledeleteOption.bind(this)
 }
 
   handleDeleteOptions() {
@@ -37,12 +38,16 @@ class FoodPickerApp extends React.Component {
     
   }
 
+  handledeleteOption(option){
+    console.log(option)
+  }
+
   render() {
     const title = "Food Picker"
     const subTitle = "Find a place to snack!"
     return (
       <div>
-        <Header title={title} subtitle={subTitle} />
+        <Header subtitle={subTitle} />
         <Action
           hasOptions={this.state.options.length > 0}
           handlePick={this.handlePick}
@@ -50,6 +55,7 @@ class FoodPickerApp extends React.Component {
         <Options
           options={this.state.options}
           handleDeleteOptions={this.handleDeleteOptions}
+          handledeleteOption={this.handledeleteOption}
         />
         <AddOption 
           handleAddOption={this.handleAddOption}
@@ -59,13 +65,23 @@ class FoodPickerApp extends React.Component {
   }
 }
 
+FoodPickerApp.defaultProps = {
+  options: []
+}
+
 const Header = (props) => {
   return (
     <div>
         <h1> {props.title} </h1>
-        <h2> {props.subtitle} </h2>
+        {
+          props.subtitle && <h2> {props.subtitle} </h2>
+        }
     </div>
   )
+}
+
+Header.defaultProps = {
+  title: "Food Picker"
 }
 
 const Action = (props) => {
@@ -83,25 +99,33 @@ const Action = (props) => {
 const Options = (props) => {
   return (
     <div>
+        <button onClick={props.handleDeleteOptions}>Remove all options!</button>
         {
           props.options.map((option) => {
-            return <Option key={option} optionText={option} />
+            return <Option
+               key={option} 
+               optionText={option} 
+               handledeleteOption={props.handledeleteOption} 
+               />
           })
         }
-        <button onClick={props.handleDeleteOptions}>Remove all options!</button>
         {/* 
           without constructor
           <button onClick={this.handleRemoveAll.bind(this.props)}>Remove all options!</button>  */
         }
-        <Option />
       </div>
   )
 }
 
 const Option = (props) => {
+  console.log(props)
   return (
     <div>
       {props.optionText}
+      <button 
+        onClick={(e) => {props.handledeleteOption(props.optionText)}}
+      >Remove
+      </button>
     </div>
   )
 }
@@ -147,4 +171,4 @@ class AddOption extends React.Component {
   }
 }
 
-ReactDOM.render(<FoodPickerApp />, document.getElementById("app"))
+ReactDOM.render(<FoodPickerApp options={["taco bell", "wendys"]}/>, document.getElementById("app"))
