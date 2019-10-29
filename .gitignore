@@ -2,3 +2,4 @@ node_modules
 scripts/app.js
 bs
 yarn.lock
+public/bundle.js
