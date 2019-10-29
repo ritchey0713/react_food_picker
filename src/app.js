@@ -10,6 +10,31 @@ class FoodPickerApp extends React.Component {
   this.handledeleteOption = this.handledeleteOption.bind(this)
 }
 
+  componentDidMount(){
+    console.log("mounted")
+    const json = localStorage.getItem("options")
+    const options = JSON.parse(json)
+    this.setState(() => {
+      return {
+        options: options
+      }
+    })
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if(prevState.options.length !== this.state.options.length){
+      const json = JSON.stringify(this.state.options)
+      localStorage.setItem("options", json)
+      console.log("updated")
+    }
+    
+    
+  }
+
+  componentWillUnmount(){
+    console.log("unmounted")
+  }
+
   handleDeleteOptions() {
     this.setState(() => {
       return {
@@ -177,4 +202,4 @@ class AddOption extends React.Component {
   }
 }
 
-ReactDOM.render(<FoodPickerApp options={["taco bell", "wendys"]}/>, document.getElementById("app"))
+ReactDOM.render(<FoodPickerApp/>, document.getElementById("app"))
