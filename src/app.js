@@ -2,10 +2,11 @@ class FoodPickerApp extends React.Component {
   constructor(props) {
   super(props)
   this.state = {
-    options: ["thing 1", "thing 2", "thing 4"]
+    options: []
   }
   this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
   this.handlePick = this.handlePick.bind(this)
+  this.handleAddOption = this.handleAddOption.bind(this)
 }
 
   handleDeleteOptions() {
@@ -18,6 +19,22 @@ class FoodPickerApp extends React.Component {
 
   handlePick() {
     alert(this.state.options[Math.floor(Math.random() * this.state.options.length)])
+  }
+
+  handleAddOption(option){
+    if(!option){
+      return "enter valid restuarant";
+    } else if(this.state.options.indexOf(option) > -1){
+      return "This option already exists!"
+    } else {
+      this.setState((prevState) => {
+        return {
+          options: prevState.options.concat(option)
+        }
+        
+      })
+    }
+    
   }
 
   render() {
@@ -34,7 +51,9 @@ class FoodPickerApp extends React.Component {
           options={this.state.options}
           handleDeleteOptions={this.handleDeleteOptions}
         />
-        <AddOption />
+        <AddOption 
+          handleAddOption={this.handleAddOption}
+        />
       </div>
     )
   }
@@ -99,18 +118,37 @@ class Option extends React.Component {
 }
 
 class AddOption extends React.Component {
-
+  constructor(props){
+    super(props)
+    // use of this inside func, must bind this
+    this.handleFormSubmit = this.handleFormSubmit.bind(this)
+    this.state = {
+      error: undefined
+    }
+  }
+  
   handleFormSubmit(e) {
     e.preventDefault();
     let data = e.target.elements.option.value.trim()
-    if (data) {
-      alert(data)
-    }
+    e.target.elements.option.value = ""
+    const error = this.props.handleAddOption(data)
+
+    this.setState(() => {
+      return {
+        // short hand error => error: error === error
+        error: error 
+
+      }
+      
+    })
   }
 
   render() {
     return (
       <div>
+        {
+          this.state.error && <p>{this.state.error}</p>
+        }
         <form onSubmit={this.handleFormSubmit}>
           <input type="text" name="option" />
           <button> Submit</button>
