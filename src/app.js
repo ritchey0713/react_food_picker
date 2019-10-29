@@ -2,7 +2,7 @@ class FoodPickerApp extends React.Component {
   constructor(props) {
   super(props)
   this.state = {
-    options: props.options
+    options: []
   }
   this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
   this.handlePick = this.handlePick.bind(this)
@@ -11,14 +11,22 @@ class FoodPickerApp extends React.Component {
 }
 
   componentDidMount(){
-    console.log("mounted")
-    const json = localStorage.getItem("options")
-    const options = JSON.parse(json)
-    this.setState(() => {
-      return {
-        options: options
+    try {
+      const json = localStorage.getItem("options")
+      const options = JSON.parse(json)
+      if(options){
+        this.setState(() => {
+          return {
+            options: options
+          }
+        })
       }
-    })
+      
+    } catch(e){
+      console.log("ERROR", e)
+    }
+    console.log("mounted")
+    
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -96,9 +104,9 @@ class FoodPickerApp extends React.Component {
   }
 }
 
-FoodPickerApp.defaultProps = {
-  options: []
-}
+// FoodPickerApp.defaultProps = {
+//   options: []
+// }
 
 const Header = (props) => {
   return (
@@ -131,6 +139,9 @@ const Options = (props) => {
   return (
     <div>
         <button onClick={props.handleDeleteOptions}>Remove all options!</button>
+        {
+          props.options.length < 1 && <p>Please add some restaurants!</p>
+        }
         {
           props.options.map((option) => {
             return <Option
@@ -174,7 +185,6 @@ class AddOption extends React.Component {
   handleFormSubmit(e) {
     e.preventDefault();
     let data = e.target.elements.option.value.trim()
-    e.target.elements.option.value = ""
     const error = this.props.handleAddOption(data)
 
     this.setState(() => {
@@ -185,6 +195,9 @@ class AddOption extends React.Component {
       }
       
     })
+    if(!error){
+      e.target.elements.option.value = ""
+    }
   }
 
   render() {
