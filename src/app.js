@@ -1,10 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 import validator from 'validator';
+import FoodPickerApp from './components/FoodPickerApp'
 
-console.log("VAL",validator.isEmail("test"))
 
 
-const template = <p>Hello</p>
 
-ReactDOM.render(template , document.getElementById("app"))
+
+
+
+ReactDOM.render(<FoodPickerApp/>, document.getElementById("app"))
+
+
+
+
