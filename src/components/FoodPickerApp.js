@@ -5,17 +5,50 @@ import Action from './Action';
 import Header from './Header';
 
 export default class FoodPickerApp extends React.Component {
-  constructor(props) {
-  super(props)
-  this.state = {
+  state = {
     options: []
   }
-  this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
-  this.handlePick = this.handlePick.bind(this)
-  this.handleAddOption = this.handleAddOption.bind(this)
-  this.handledeleteOption = this.handledeleteOption.bind(this)
-}
 
+
+  handlePick = () => {
+    alert(this.state.options[Math.floor(Math.random() * this.state.options.length)])
+  }
+
+  handleAddOption = (option) =>{
+    if(!option){
+      return "enter valid restuarant";
+    } else if(this.state.options.indexOf(option) > -1){
+      return "This option already exists!"
+    } else {
+      this.setState((prevState) => {
+        return {
+          options: prevState.options.concat(option)
+        }
+        
+      })
+    }
+    
+  }
+
+  handledeleteOption = (option) => {
+    this.setState((prevState) => {
+      return {
+        options: prevState.options.filter((oldOption) => {
+          return option != oldOption
+        })
+      }
+    })
+  }
+
+
+  handleDeleteOptions = () => {
+    this.setState(() => {
+      return {
+        options: []
+      }
+    })
+  }
+  
   componentDidMount(){
     try {
       const json = localStorage.getItem("options")
@@ -47,44 +80,6 @@ export default class FoodPickerApp extends React.Component {
 
   componentWillUnmount(){
     console.log("unmounted")
-  }
-
-  handleDeleteOptions() {
-    this.setState(() => {
-      return {
-        options: []
-      }
-    })
-  }
-
-  handlePick() {
-    alert(this.state.options[Math.floor(Math.random() * this.state.options.length)])
-  }
-
-  handleAddOption(option){
-    if(!option){
-      return "enter valid restuarant";
-    } else if(this.state.options.indexOf(option) > -1){
-      return "This option already exists!"
-    } else {
-      this.setState((prevState) => {
-        return {
-          options: prevState.options.concat(option)
-        }
-        
-      })
-    }
-    
-  }
-
-  handledeleteOption(option){
-    this.setState((prevState) => {
-      return {
-        options: prevState.options.filter((oldOption) => {
-          return option != oldOption
-        })
-      }
-    })
   }
 
   render() {
