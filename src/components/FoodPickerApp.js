@@ -3,15 +3,22 @@ import AddOption from './AddOption';
 import Options from './Options';
 import Action from './Action';
 import Header from './Header';
+import OptionModal from './OptionModal'
 
 export default class FoodPickerApp extends React.Component {
   state = {
-    options: []
+    options: [],
+    selectedOption: undefined
   }
 
 
   handlePick = () => {
-    alert(this.state.options[Math.floor(Math.random() * this.state.options.length)])
+   let option = this.state.options[Math.floor(Math.random() * this.state.options.length)]
+    this.setState(() => {
+      return {
+        selectedOption: option
+      }
+    })
   }
 
   handleAddOption = (option) =>{
@@ -100,6 +107,7 @@ export default class FoodPickerApp extends React.Component {
         <AddOption 
           handleAddOption={this.handleAddOption}
         />
+        <OptionModal selectedOption={this.state.selectedOption} />
       </div>
     )
   }
