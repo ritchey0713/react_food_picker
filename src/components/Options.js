@@ -4,7 +4,12 @@ import Option from './Option'
 const Options = (props) => {
   return (
     <div>
-        <button onClick={props.handleDeleteOptions}>Remove all options!</button>
+        <button
+         className="button--link"
+         onClick={props.handleDeleteOptions}
+        >
+         Remove all options!
+        </button>
         {
           props.options.length < 1 && <p>Please add some restaurants!</p>
         }
