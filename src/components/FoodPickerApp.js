@@ -55,6 +55,14 @@ export default class FoodPickerApp extends React.Component {
       }
     })
   }
+
+  handleModalClose = () => {
+    this.setState(() => {
+      return {
+        selectedOption: undefined
+      }
+    })
+  }
   
   componentDidMount(){
     try {
@@ -107,7 +115,7 @@ export default class FoodPickerApp extends React.Component {
         <AddOption 
           handleAddOption={this.handleAddOption}
         />
-        <OptionModal selectedOption={this.state.selectedOption} />
+        <OptionModal handleModalClose={this.handleModalClose} selectedOption={this.state.selectedOption} />
       </div>
     )
   }
